@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #6f4e37;   /* Dominant brown */
+  --color-secondary: #a0522d; /* Secondary brown */
+  --color-tertiary: #d2b48c;  /* Light brown/tan */
+}
+
+@font-face {
+  font-family: 'CoffeFont';
+  src: url('/Demo_Fonts/fonnts.com-lumiosbrush-regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+#nprogress .bar {
+  background: lab(69.91% 35.85 75.23) !important;
+  height: 4px !important;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px rgb(221, 124, 34), 0 0 5px rgb(220, 133, 11) !important;
+}
+
+#nprogress .spinner-icon {
+  display: none !important;
+}
