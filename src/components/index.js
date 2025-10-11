@@ -19,8 +19,4 @@ export {
     About,
     ChatWidget,
     Kerjasama
-
-
-    
-
 };

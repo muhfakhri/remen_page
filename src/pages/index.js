@@ -8,6 +8,8 @@ import Product from '@/components/product';
 import { About, ChatWidget, Kerjasama, TopButton } from '@/components';
 import { motion } from 'framer-motion';
 import useScrollAnimation from '../hooks/useScrollAnimation';
+import IklanBaner from '../components/BannerSlider'
+
 
 const aboutVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -44,8 +46,8 @@ export default function Home() {
         <Hero /> 
         <br /> <br /> <br />
         <div className="relative z-40 h-[20px]">
-  <div className="absolute left-1/2 -translate-x-1/2 top-0 translate-y-[-90%]  px-6 py-41 rounded-xl  max-w-xl w-full text-center transform transition-all ">
-    <img src="/images/Voucher.png" alt="Remen Coffe Logo" className="h-10px mx-auto mb-5" />
+      <div className="absolute left-1/2 -translate-x-1/2 top-0 translate-y-[-90%]  px-6 py-41 rounded-xl  max-w-xl w-full text-center transform transition-all ">
+        <IklanBaner />
     
   </div>
 </div>
