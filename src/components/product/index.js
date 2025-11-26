@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
+import { useCart } from "../../context/CartContext";
 
 const Product = () => {
   const [bestSeller, setBestSeller] = useState([]);
@@ -14,6 +15,14 @@ const Product = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerSlide, setItemsPerSlide] = useState(3);
   const [showAll, setShowAll] = useState(false);
+  const [addedNotification, setAddedNotification] = useState(null);
+  const { addToCart } = useCart();
+
+  const handleAddToCart = (product) => {
+    addToCart(product);
+    setAddedNotification(product.title);
+    setTimeout(() => setAddedNotification(null), 2000);
+  };
 
   const openModal = (product) => {
     setModalContent(product.description);
@@ -26,6 +35,13 @@ const Product = () => {
   };
 
   const closeModal = () => setIsModalOpen(false);
+
+  const scrollToMenuUnggulan = () => {
+    const element = document.getElementById("menu-unggulan");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   const updateItemsPerSlide = () => {
     const width = window.innerWidth;
@@ -81,9 +97,16 @@ const Product = () => {
   }
 
   return (
-    <div className="w-full px-4 text-center">
+    <div className="w-full px-4 text-center" id="menu-unggulan">
+      {/* Notification Toast */}
+      {addedNotification && (
+        <div className="fixed top-20 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 animate-pulse">
+          ✓ {addedNotification} ditambahkan ke keranjang
+        </div>
+      )}
+      
       <div className="text-center mb-10">
-        <h2 className="text-3xl font-extrabold text-gray-800">Menu Unggulan</h2>
+        <h2 className="text-3xl font-extrabold text-gray-800 cursor-pointer hover:text-logo-color transition-colors" onClick={scrollToMenuUnggulan}>Menu Unggulan</h2>
       </div>
 
       {/* SLIDER */}
@@ -138,10 +161,10 @@ const Product = () => {
                   </div>
                   <p className="text-gray-600 text-sm line-clamp-2">{product.description}</p>
                   <button
-                    onClick={() => openModal(product)}
+                    onClick={() => handleAddToCart(product)}
                     className="mt-3 text-white bg-logo-color hover:bg-coklat-muda px-4 py-2 rounded-md text-sm transition"
                   >
-                    order 
+                    + Keranjang
                   </button>
                 </div>
               </div>
@@ -190,10 +213,10 @@ const Product = () => {
                     )}
                   </div>
                   <button
-                    onClick={() => openModal(product)}
+                    onClick={() => handleAddToCart(product)}
                     className="text-white bg-logo-color hover:bg-coklat-muda px-2 py-1 rounded text-xs transition"
                   >
-                    order 
+                    + Keranjang
                   </button>
                 </div>
               </div>

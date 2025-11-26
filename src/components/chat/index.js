@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
 
-const ChatWidget = () => {
+const ChatWidget = ({ isCartOpen = false }) => {
   const [whatsapp, setWhatsapp] = useState("");
 
   useEffect(() => {
@@ -48,18 +48,86 @@ const ChatWidget = () => {
         marginLeft: 20,
         marginRight: 20,
         btnPosition: "left",
-        whatsAppNumber: whatsapp, // pakai state
+        whatsAppNumber: whatsapp,
         welcomeMessage: "",
-        zIndex: 999999,
+        zIndex: isCartOpen ? -1000 : 999999,
         btnColorScheme: "light",
       };
       _waEmbed(wa_btnSetting);
     };
 
     return () => {
-      document.body.removeChild(script);
+      if (document.body.contains(script)) {
+        document.body.removeChild(script);
+      }
     };
-  }, [whatsapp]);
+  }, [whatsapp, isCartOpen]);
+
+  // Hide WhatsApp widget when cart is open with aggressive CSS
+  useEffect(() => {
+    let styleSheet = document.getElementById('wa-aggressive-hide');
+    
+    if (isCartOpen) {
+      if (!styleSheet) {
+        styleSheet = document.createElement('style');
+        styleSheet.id = 'wa-aggressive-hide';
+        document.head.appendChild(styleSheet);
+      }
+      
+      // Extremely aggressive CSS to hide all WA elements
+      styleSheet.innerHTML = `
+        /* Hide all WhatsApp widget elements */
+        .wa_button,
+        .wa-button,
+        [class*="whatsapp"],
+        [class*="delightchat"],
+        [id*="whatsapp"],
+        [id*="delightchat"],
+        [data-wa-widget],
+        button[aria-label*="WhatsApp"],
+        div[data-test*="whatsapp"],
+        iframe[src*="delightchat"],
+        [style*="whatsapp"],
+        [style*="delightchat"] {
+          display: none !important;
+          visibility: hidden !important;
+          opacity: 0 !important;
+          height: 0 !important;
+          width: 0 !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          border: none !important;
+          pointer-events: none !important;
+          z-index: -99999 !important;
+        }
+        
+        /* Hide SVG icons that might be part of the widget */
+        svg[class*="whatsapp"],
+        svg[class*="delightchat"],
+        [class*="whatsapp"] svg,
+        [class*="delightchat"] svg {
+          display: none !important;
+          visibility: hidden !important;
+        }
+        
+        /* Hide any fixed position buttons on the left/right */
+        body > button,
+        body > div[style*="position: fixed"] {
+          display: none !important;
+        }
+      `;
+    } else {
+      if (styleSheet) {
+        styleSheet.innerHTML = '';
+      }
+    }
+
+    return () => {
+      if (styleSheet && !isCartOpen) {
+        styleSheet.innerHTML = '';
+      }
+    };
+  }, [isCartOpen]);
 
   return null;
 };

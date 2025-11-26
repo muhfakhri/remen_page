@@ -28,3 +28,21 @@
 #nprogress .spinner-icon {
   display: none !important;
 }
+
+/* Comprehensive WhatsApp widget hiding */
+.wa_button,
+.wa-button,
+[class*="whatsapp"],
+[class*="delightchat"],
+[id*="whatsapp"],
+[id*="delightchat"],
+[data-wa-widget],
+button[aria-label*="WhatsApp"],
+div[data-test*="whatsapp"],
+iframe[src*="delightchat"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  z-index: -99999 !important;
+}

@@ -10,7 +10,24 @@ export default function Document() {
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="Jurusan Menejemen Perkantoran SMKN 1 BANTUL" />
-       
+        <style dangerouslySetInnerHTML={{__html: `
+          .wa_button,
+          .wa-button,
+          [class*="whatsapp"],
+          [class*="delightchat"],
+          [id*="whatsapp"],
+          [id*="delightchat"],
+          [data-wa-widget],
+          button[aria-label*="WhatsApp"],
+          div[data-test*="whatsapp"],
+          iframe[src*="delightchat"] {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+            z-index: -99999 !important;
+          }
+        `}} />
       </Head>
       <body className="antialiased">
         <Main />

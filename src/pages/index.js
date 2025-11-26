@@ -1,10 +1,12 @@
 // filepath: /c:/Users/nurfa/OneDrive/Documents/A_CODING/nextjs/tefa-mp/src/pages/index.js
 import Head from 'next/head';
+import { useState } from 'react';
 import Navbar from '../components/navbar';
 import Hero from '../components/hero';
 import Footer from '../components/Footer';
 import Contact from '../components/contact';
 import Product from '@/components/product';
+import Cart from '@/components/cart';
 import { About, ChatWidget, Kerjasama, TopButton } from '@/components';
 import { motion } from 'framer-motion';
 import useScrollAnimation from '../hooks/useScrollAnimation';
@@ -27,6 +29,7 @@ const productVariants = {
 };
 
 export default function Home() {
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const [aboutRef, aboutControls] = useScrollAnimation(aboutVariants);
   const [kerjasamaRef, kerjasamaControls] = useScrollAnimation(kerjasamaVariants);
   const [productRef, productControls] = useScrollAnimation(productVariants);
@@ -41,8 +44,9 @@ export default function Home() {
         <link rel="icon" href="/logo_remen.svg" type="image/svg+xml"/>
       </Head>
       <main>
-        <Navbar />
-        <ChatWidget />
+        <Navbar onCartClick={() => setIsCartOpen(true)} />
+        <Cart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+        <ChatWidget isCartOpen={isCartOpen} />
         <Hero /> 
         <br /> <br /> <br />
         <div className="relative z-40 h-[20px]">
@@ -82,7 +86,7 @@ export default function Home() {
         </motion.div>
         <br /> <div id='contact' /> <br /> <br /> <br /> <br /> <br />
         <Contact />
-        <TopButton />
+        <TopButton isCartOpen={isCartOpen} />
         <Footer />
       </main>
     </div>
